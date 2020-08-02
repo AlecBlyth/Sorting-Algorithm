@@ -1,0 +1,27 @@
+fun sortRoutSort []         = true
+  | sortRoutSort [x]        = true
+  | sortRoutSort (x::a::z) = x < a andalso sortRoutSort (a::z)
+  (*Check if sorted*)
+
+local
+  fun sortRout' [] = []
+    | sortRout' [x] = [x]
+    | sortRout' (x::a::z) = case Int.compare (x,a) of
+                               GREATER => a :: x :: z
+                             | EQUAL   => x :: a :: z
+                             | LESS    => x :: sortRout' (a::z)
+							 
+(*Loop function for point iteration*) 						 
+  fun loop i x = if i x = x then x
+                else loop i (i x)
+in
+  (* sortRout : int list -> int list*) 
+  fun sortRout x = loop sortRout' x
+end;
+
+(*End of program/important code*)
+
+(* should return true *)
+val sortRout_1 = sortRout[74,36,49,38,29,34,10,40,70,20,30] = [10,20,29,30,34,36,38,40,49,70,74]
+(* should return false *)
+val sortRout_2 = sortRout[74,36,49,38,29,34,10,40,70,20,30] = [74,10,29,34,70,20,30,49,40,38,36];
